@@ -30,7 +30,11 @@ cd ..../bin
 
 java -cp ./:../jaxr-api.jar:../jarx-impl-mwcc.jar mw/path/MWPathPubishSrv
 
+cd ..../bin
+
 java -cp ./:../jaxr-api.jar:../jarx-impl-mwcc.jar mw/cache/MWCache
 
-java -jar jetty-runner-9.0.0.M4.jar hello/out/artifacts/hello_war_exploded
+cd ..../jetty/
+
+java -jar jetty-runner-9.0.0.M4.jar out/artifacts/hello_war_exploded
 
