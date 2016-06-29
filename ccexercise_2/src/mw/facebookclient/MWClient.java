@@ -1,5 +1,7 @@
 package mw.facebookclient;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -9,7 +11,10 @@ import javax.xml.namespace.QName;
 //import javax.xml.registry.infomodel.Service;
 
 import javax.xml.ws.Service ;
+import javax.xml.ws.WebServiceFeature;
 
+import mw.MWRegistryAccess;
+import mw.Tools;
 import mw.path.MWMyPathService;
 import mw.path.MWNoPathException;
 import mw.path.MWMyPathService;
@@ -30,9 +35,23 @@ public class MWClient {
 	// MWPathService_Service class, und MWPathService ist  interface
 	// Durch  MWPathService_Service().getMWPathServicePort() kann man von Server --
    //das MWPathService.class bekommen
-	public MWClient(){
+	
+	
+	public MWClient() throws UnsupportedEncodingException, IOException{
 		MyFacebookService  = new MWFacebookService().getMWMyFacebookServicePort();
-		MyPathService = new MWPathService_Service().getMWPathServicePort();
+		
+		// ask registry for WSDL location
+		Tools curl = new  Tools();
+		String registryURL = curl.CURL("https://www.ibr.cs.tu-bs.de/courses/ss16/cc/pub/exercise1/ws-registry.adr");
+		//String registryURL = 	"http://134.169.47.184:4222/juddi";
+		String queryManagerURL = registryURL + "/inquiry";
+		String lifeCycleManagerURL = registryURL + "/publish";
+		MWRegistryAccess MWRA = new MWRegistryAccess();
+		MWRA.openConnection(queryManagerURL, lifeCycleManagerURL);
+        String publishAddress = MWRA.listWSDLs("gruppe8","MWPathService");
+        System.out.println("publish Address in juddi is "+ publishAddress);
+		URL wsdllocation = new URL(publishAddress);
+		MyPathService = new MWPathService_Service(wsdllocation ).getMWPathServicePort();
 	}
 	
 	public void searchIDs(String name){
@@ -91,12 +110,15 @@ public class MWClient {
 		}
 	}
 	
-	public static void main(String[] args) throws MalformedURLException, MWNoPathException, JAXBException_Exception, MWNoSuchKeyException_Exception {
+	public static void main(String[] args) throws MWNoPathException, JAXBException_Exception, MWNoSuchKeyException_Exception, UnsupportedEncodingException, IOException {
 		// TODO Auto-generated method stub
 		MWClient client = new MWClient();
 		//client. getFriends("1694452301");
 		//client.searchIDs("Fish");
 		//client.calculatePath("1832770518", "100000690315984");
+		client.calculatePath("1832770518", "100000690315984");
+		//client.calculatePath("1694452301", "100000859170147");
+		/*
 		if(args.length == 2 && args[0].equals("SEARCH")){
 			client.searchIDs(args[1]);
 		}
@@ -109,6 +131,7 @@ public class MWClient {
 		else{
 			System.out.println("error");
 		}
+		*/
 	}
 
 }

@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "MWPathService", targetNamespace = "http://path.mw/", wsdlLocation = "http://134.169.203.19:12345/MWPathSrv?wsdl")
+@WebServiceClient(name = "MWPathService", targetNamespace = "http://path.mw/", wsdlLocation = "http://134.169.47.28:12345/MWPathSrv?wsdl")
 public class MWPathService_Service
     extends Service
 {
@@ -30,7 +30,7 @@ public class MWPathService_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://134.169.203.19:12345/MWPathSrv?wsdl");
+            url = new URL("http://134.169.47.28:12345/MWPathSrv?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

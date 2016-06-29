@@ -32,8 +32,8 @@ public interface MWPathService {
      * @return
      *     returns mw.pathclient.StringArray
      * @throws JAXBException_Exception
-     * @throws MWNoSuchKeyException_Exception
      * @throws MWNoPathException_Exception
+     * @throws MWNoSuchKeyException_Exception
      */
     @WebMethod
     @WebResult(partName = "return")

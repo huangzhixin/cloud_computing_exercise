@@ -54,14 +54,17 @@ public class MWCache implements Provider<Source> {
 			
 			if(Value == null){
 				responeMessageBody.setMessage("null");
+				responeMessageBody.setStatus("404");
 			}else{
 				responeMessageBody.setMessage("successful:"+Value);
+				responeMessageBody.setStatus("200");
 			}
 			return new JAXBSource(jaxbContext, factory.createMWCacheReply(responeMessageBody));
 		}catch(JAXBException e){
 			
 			MWMessage responeMessageBody = factory.createMWMessage();
 			responeMessageBody.setMessage("failed");
+			responeMessageBody.setStatus("201");
 			return new JAXBSource(jaxbContext, factory.createMWCacheReply(responeMessageBody));
 		}
 	}
@@ -73,6 +76,7 @@ public class MWCache implements Provider<Source> {
 			
 			if(!cache.containsKey(key)){
 				responeMessageBody.setMessage("not found failed");
+				responeMessageBody.setStatus("404");
 			}else{
 				responeMessageBody.setMessage(cache.get(key));
 			}
@@ -81,6 +85,7 @@ public class MWCache implements Provider<Source> {
 		}catch (JAXBException e) {
 			MWMessage responeMessageBody = factory.createMWMessage();
 			responeMessageBody.setMessage("failed");
+			responeMessageBody.setStatus("201");
 			return new JAXBSource(jaxbContext, factory.createMWCacheReply(responeMessageBody));
 		}
 	}
@@ -118,7 +123,7 @@ public class MWCache implements Provider<Source> {
 	MWCache mwcache= new MWCache();
 	
 	Endpoint endpoint=Endpoint.create(HTTPBinding.HTTP_BINDING,mwcache);
-	endpoint.publish("http://localhost:12345/cache-service/");
+	endpoint.publish("http://0.0.0.0:12346/cache-service/");
 	}
 }
 

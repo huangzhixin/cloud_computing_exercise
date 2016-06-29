@@ -1,11 +1,13 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<!--DATA TYPES -->
-	<xsd:complexType name="MWCache">
+        
+	<xsd:complexType name="MWMessage">
 		<xsd:sequence>
-			<xsd:element name="message" type="xsd:string"/>
+			<xsd:element name="status" type=""xsd:string""/>
+                        <xsd:element name="message" type="xsd:string"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<!--Messages -->
-	<xsd:element name="MWCacheRequest" type="MWCache"/>	
-	<xsd:element name="MWCacheReply" type="MWCache"/>
+	<xsd:element name="MWCacheRequest" type="MWMessage"/>	
+	<xsd:element name="MWCacheReply" type="MWMessage"/>
 </xsd:schema>

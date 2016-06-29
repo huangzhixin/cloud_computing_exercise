@@ -15,6 +15,7 @@ import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.JAXBException;
 
 
+import mw.Tools;
 import mw.cache.MWCacheClient;
 import mw.cache.MWNoSuchKeyException;
 import mw.facebookclient.MWFacebookService;
@@ -166,13 +167,19 @@ public class MWMyPathService implements MWPathServiceInterface{
 	
 	public String[] calculatePath(String startID, String endID) throws MWNoPathException, JAXBException, MWNoSuchKeyException{
 		MWCacheClient client = new MWCacheClient();
-		String result = client.getObject(startID+"/"+endID);
-		String[] path = result.split("/");
-		for (String str : path) {
+		int lenOfstartID = startID.length();
+		int lenOfiendID = endID.length();
+		String result = client.getObject(lenOfstartID+":"+startID+":"+lenOfiendID+":"+endID);
+		//=================================================================
+		//result = "2:as:5:asdfg:3:qwe"
+		Tools decode = new Tools();
+		String[] paths = decode.decode(result);
+		for (String str : paths) {
 			   System.out.println(str);
 		}
-		System.out.println("number of node is : " + path.length);
-		return path;
+		System.out.println("number of node is : " + paths.length);
+		
+		return paths;
 	}
 	
 	
@@ -187,7 +194,8 @@ public class MWMyPathService implements MWPathServiceInterface{
 			//for (String str : path) {
 			 //   System.out.println(str);
 			//}
-			path = s.calculatePath("1832770518", "100000690315984");
+			//path = s.calculatePath("1832770518", "100000690315984");
+			path = s.remoteCalculatePath("1832770518", "100000690315984");
 			//path = s.judgement("1694452301", "100000859170147");
 		} catch (MWNoPathException e) {
 			// TODO Auto-generated catch block

@@ -1,8 +1,10 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<!--DATA TYPES -->
+        
 	<xsd:complexType name="MWMessage">
 		<xsd:sequence>
-			<xsd:element name="message" type="xsd:string"/>
+			<xsd:element name="status" type="xsd:string"/>
+                        <xsd:element name="message" type="xsd:string"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<!--Messages -->

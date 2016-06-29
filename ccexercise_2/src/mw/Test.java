@@ -2,12 +2,15 @@ package mw;
 
 import java.util.Locale;
 
+import javax.xml.registry.JAXRException;
+
 public class Test {
 
 	/**
 	 * @param args
+	 * @throws JAXRException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws JAXRException {
 		
 		Locale.setDefault(Locale.US);
 		// TODO Auto-generated method stub
@@ -16,7 +19,7 @@ public class Test {
 		String lifeCycleManagerURL = registryURL + "/publish";
 		MWRegistryAccess MWRA = new MWRegistryAccess();
 		MWRA.openConnection(queryManagerURL, lifeCycleManagerURL);
-		MWRA.listWSDLs("MWFacebookService");
+		MWRA.listWSDLs("gruppe8","MWFacebookService");
 		String uri = "http://10.101.8.30:12346/MWMyPathSrv";
 		MWRA.authenticate("gruppe8", "");
 		MWRA.registerService("gruppe8", "MWPathService", uri + "?wsdl");

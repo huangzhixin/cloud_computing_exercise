@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>MWNoPathException complex type的 Java 类。
+ * <p>Java class for MWNoPathException complex type.
  * 
- * <p>以下模式片段指定包含在此类中的预期内容。
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="MWNoPathException">
@@ -34,7 +34,7 @@ public class MWNoPathException {
     protected String message;
 
     /**
-     * 获取message属性的值。
+     * Gets the value of the message property.
      * 
      * @return
      *     possible object is
@@ -46,7 +46,7 @@ public class MWNoPathException {
     }
 
     /**
-     * 设置message属性的值。
+     * Sets the value of the message property.
      * 
      * @param value
      *     allowed object is

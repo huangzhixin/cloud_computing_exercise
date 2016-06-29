@@ -1,6 +1,7 @@
 package mw.cache;
 
 import java.util.Map;
+import java.util.UUID;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -11,6 +12,7 @@ import javax.xml.ws.Service;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.http.HTTPBinding;
 
+import mw.Tools;
 import mw.cache.generated.MWMessage;
 import mw.cache.generated.ObjectFactory;
 import mw.path.MWMyPathService;
@@ -19,7 +21,7 @@ import mw.path.MWNoPathException;
 public class MWCacheClient {
 	public void addObject(String key, String value) throws JAXBException{
 		// Zusammenstellung der Ressourcen-Adresse
-		String path = "http://localhost:12345/cache-service/" + key;
+		String path = "http://0.0.0.0:12346/cache-service/" + key;
 		// Konfiguration der Service-Verbindung
 		QName qName = new QName("", "");
 		// Service-Endpunkt-Name
@@ -45,7 +47,7 @@ public class MWCacheClient {
 	}
 	public String getObject(String key) throws JAXBException, MWNoSuchKeyException, MWNoPathException{
 		// Zusammenstellung der Ressourcen-Adresse
-		String path = "http://localhost:12345/cache-service/" + key;
+		String path = "http://0.0.0.0:12346/cache-service/" + key;
 		// Konfiguration der Service-Verbindung
 		QName qName = new QName("", "");
 		// Service-Endpunkt-Name
@@ -69,8 +71,12 @@ public class MWCacheClient {
 		MWMessage value = (MWMessage) reply.getValue();
 		//System.out.println(value.getMessage());
 		if(value.getMessage().equals("not found failed")){
-			String[] id = new String[2];
-			id = key.split("/");
+			
+			Tools decode = new Tools();
+			//key ="10:asdfghjklö:5:asdfg";
+			String[] id = decode.decode(key);
+			
+			//id = key.split("/");
 			return MWNoSuchKeyException(id[0],id[1]);
 		}
 		else{
@@ -87,15 +93,18 @@ public class MWCacheClient {
 		System.out.println("NO Such Key !!!!!!! call MWFacebookService to calculatePath!!! ");
 		MWMyPathService s = new MWMyPathService();
         //String[] path = s.calculatePath("1694452301", "100000859170147");
-		 String[] path;
+		String[] path;
         String value= "";
 		path = s.remoteCalculatePath(startID, endID);
 		for (String str : path) {
-			   value+=str+"/";
+			   int lenOfstr = str.length();
+			   value+=lenOfstr+":"+str+":";
 			  // System.out.println(str);
 		}
 		MWCacheClient client = new MWCacheClient();
-		client.addObject(startID+"/"+endID, value);
+		int lenOfstartID = startID.length();
+		int lenOfiendID = endID.length();
+		client.addObject(lenOfstartID+":"+startID+":"+lenOfiendID+":"+endID, value);
 		return value;
    }
 	public static void main(String[] args) {
