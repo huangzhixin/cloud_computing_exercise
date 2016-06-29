@@ -24,3 +24,17 @@ Míra Masár
 Samy Kartit
 
 ================================================================================================
+
+=========================================ccexercise_3===========================================
+cd ..../bin
+
+java -cp ./:../jaxr-api.jar:../jarx-impl-mwcc.jar mw/path/MWPathPubishSrv
+
+cd ..../bin
+
+java -cp ./:../jaxr-api.jar:../jarx-impl-mwcc.jar mw/cache/MWCache
+
+cd ..../jetty/
+eclipse编译好后，bin里面的所有class文件粘贴到out/artifacts/hello_war_exploded/WEB-INF/classes
+java -jar jetty-runner-9.0.0.M4.jar out/artifacts/hello_war_exploded
+
