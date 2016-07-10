@@ -42,7 +42,7 @@ public class MWLoadController {
 	public MWLoadController() {
 		
 		instanceIDs = new ArrayList<String>();
-		AWSCredentials credentials = new BasicAWSCredentials("AKIAI7ZFFH4HVDCDN4KA", "Y2YwwEluxOvr0Yy5sjBZQzhZEOaWqifVNNPJjI29");
+		AWSCredentials credentials = new BasicAWSCredentials("key id", "key access");
 		ec2 = new AmazonEC2Client(credentials);
 		ec2.setEndpoint("https://ec2.eu-west-1.amazonaws.com");
 		lb = new AmazonElasticLoadBalancingClient(credentials);
