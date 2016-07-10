@@ -1,0 +1,29 @@
+首先cd 到exercise5
+
+申明一些配置变量
+source aws.conf
+
+测试instances
+ec2-run-instances --instance-type m1.small --key gruppe8 --user-data="Hello World." ami-e43ccd93
+
+这个是我们的Hostname 这个每个启动的instance都不一样， 用ec2-describe-instances 可以查看 
+ec2-52-208-208-185.eu-west-1.compute.amazonaws.com
+
+SSH 登录命令
+ssh -i "gruppe8.pem" root@ec2-52-48-96-203.eu-west-1.compute.amazonaws.com
+
+删除一个instance，后面参数是instance的id
+ec2-terminate-instances i-52bef0de
+
+配置s3
+s3cmd --configure
+
+创建bucket
+s3cmd mb s3://gruppe8-bucket
+
+把jar包传到bucket
+s3cmd --acl-public put ./MWFacebookService.jar s3://gruppe8-bucket/MWFacebookService.jar
+
+运行webservice
+ec2-run-instances --instance-type m1.small --key gruppe8 --user-data="group=gruppe8-bucket;jar=MWFacebookService.jar;parameters=http://0.0.0.0:18081/MWFacebookService?wsdl" ami-e43ccd93
+
